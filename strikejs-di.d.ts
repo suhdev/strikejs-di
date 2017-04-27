@@ -16,5 +16,7 @@ declare module "strikejs-di" {
         children?:any;
     }
 
-    export = function DI(props:DependencyInjectorProps):React.ReactElement<any>;
+    function DI(props:DependencyInjectorProps):React.ReactElement<any>;
+
+    export = DI;
 }

@@ -1,6 +1,6 @@
 {
   "name": "strikejs-di",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A ReactJS class to manage dependencies in ReactJS applications declaratively. Written in TypeScript. ",
   "main": "lib/di.js",
   "typings":"srikejs-di.d.ts",
