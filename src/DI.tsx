@@ -22,21 +22,21 @@ interface DependencyInjectorProps{
 }
 
 function inj(store:DependencyStore,el:R.ReactElement<any>|R.ReactElement<any>[]){
-    return R.Children.map(el,(child:any)=>{
+    return R.Children.map(el,(c:any)=>{
         let deps = {}; 
-        let children = null; 
-        if (child && child.props.children){
-            children = inj(store,child.props.children); 
+        let chld = null; 
+        if (c && c.props.children){
+            chld = inj(store,c.props.children); 
         }
-        if (child && child.props && child.props.deps){
-            forEach<string>(child.props.deps,(dep,key)=>{
+        if (c && c.props && c.props.deps){
+            forEach<string>(c.props.deps,(dep,key)=>{
                 deps[dep] = store.get(typeof key === "number"?dep:key); 
             });
         }
-        return R.createElement(child.type,{
-            ...child.props,
+        return R.createElement(c.type,{
+            ...c.props,
             ...deps
-        },children);
+        },chld);
     });
 }
 
@@ -46,3 +46,8 @@ function DI(props:DependencyInjectorProps){
 }
 
 export = DI; 
+
+if (window){
+    (window as any).StrikeJs = (window as any).StrikeJs || {}; 
+    (window as any).StrikeJs.DI = DI; 
+}
