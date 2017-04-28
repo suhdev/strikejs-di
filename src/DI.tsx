@@ -41,6 +41,13 @@ function inj(store:DependencyStore,el:R.ReactElement<any>|R.ReactElement<any>[])
 }
 
 function DI(props:DependencyInjectorProps){
+    let cc = R.Children.count(props.children); 
+    if (!props.children || cc > 1){
+        throw new Error(`DI can only have one root child component. ${cc} was given.`);
+    }
+    if (!props.injector){
+        throw new Error('Please provide a valid implementation of a dependency injection container.');
+    }
     let t = inj(props.injector,props.children); 
     return t[0];
 }
