@@ -1,27 +1,27 @@
 import * as R from 'react'; 
 
-type Iterator<T> = (o:T,i:number|string)=>void; 
+export type Iterator<T> = (o:T,i:number|string)=>void; 
 
-type Dictionary<T> = {
+export type Dictionary<T> = {
     [idx:string]:T;
 }
 
-function forEach<T>(obj:Dictionary<T>|T[],iterator:Iterator<T>){
+export function forEach<T>(obj:Dictionary<T>|T[],iterator:Iterator<T>){
     for(var key in obj){
         iterator(obj[key],key); 
     }
 }
 
-interface DependencyStore {
+export interface DependencyStore {
     get<T>(key:string):T; 
 }
 
-interface DependencyInjectorProps{
+export interface DependencyInjectorProps{
     injector:DependencyStore; 
     children?:any;
 }
 
-function inj(store:DependencyStore,el:R.ReactElement<any>|R.ReactElement<any>[]){
+export function inj(store:DependencyStore,el:R.ReactElement<any>|R.ReactElement<any>[]){
     return R.Children.map(el,(c:any)=>{
         let deps = {}; 
         let chld = null; 
@@ -40,7 +40,7 @@ function inj(store:DependencyStore,el:R.ReactElement<any>|R.ReactElement<any>[])
     });
 }
 
-function DI(props:DependencyInjectorProps){
+export function DI(props:DependencyInjectorProps){
     let cc = R.Children.count(props.children); 
     if (!props.children || cc > 1){
         throw new Error(`DI can only have one root child component. ${cc} was given.`);
@@ -51,8 +51,6 @@ function DI(props:DependencyInjectorProps){
     let t = inj(props.injector,props.children); 
     return t[0];
 }
-
-export = DI; 
 
 if (window){
     (window as any).StrikeJs = (window as any).StrikeJs || {}; 
