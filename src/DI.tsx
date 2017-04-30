@@ -52,7 +52,7 @@ export function DI(props:DependencyInjectorProps){
     return t[0];
 }
 
-if (window){
-    (window as any).StrikeJs = (window as any).StrikeJs || {}; 
-    (window as any).StrikeJs.DI = DI; 
+if (self.document){
+    (self as any).StrikeJs = (self as any).StrikeJs || {}; 
+    (self as any).StrikeJs.DI = DI; 
 }
